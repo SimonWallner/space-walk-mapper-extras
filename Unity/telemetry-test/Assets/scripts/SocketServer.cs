@@ -84,7 +84,7 @@ public class SocketServer {
 
 					string type = (string)dict["type"];
 
-					if (type == "mapTileRequest") {
+					if (type == "ext.simpleTelemetry.mapTileRequest") {
 //						Debug.Log("it's a map tile request!");
 						var payload = (Dictionary<string, object>)dict["payload"];
 

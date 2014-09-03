@@ -38,7 +38,7 @@ public static class Telemetry {
 	};
 
 	public static void log(Level level, string msg) {
-		var json = "{\"type\": \"log\", \"payload\": {\"level\": \""
+		var json = "{\"type\": \"core.simpleLog.message\", \"payload\": {\"level\": \""
 			+ logLevelTokens[(int)level]
 			+ "\", \"message\": \""
 			+ msg
@@ -81,9 +81,9 @@ public static class Telemetry {
 	}
 
 	public static void data(string name, float value) {
-		var json = "{\"type\": \"data\", \"payload\": {" +
+		var json = "{\"type\": \"core.simpleTelemetry.sample\", \"payload\": {" +
 			"\"name\": \"" + name + "\", " + 
-			"\"reference\": " + Time.time + ", " + 
+			"\"time\": " + Time.time + ", " + 
 			"\"value\": " + value + "}}";
 		
 		Server.Broadcast(json);
@@ -103,8 +103,9 @@ public static class Telemetry {
 
 		string base64 = System.Convert.ToBase64String(bytes);
 
-		string json = "{\"type\": \"mapTile\", \"payload\": {" +
-			"\"type\": \"image/png;base64\", " +
+		string json = "{\"type\": \"ext.simpleTelemetry.mapTileData\", \"payload\": {" +
+			"\"mime\": \"image/png\", " +
+			"\"encoding\": \"base64\", " +
 			"\"data\": \"" + base64 + "\", " +
 			"\"x\": "+ rect.xMin + ", " +
 			"\"y\": " + rect.yMin + ", " +
@@ -115,7 +116,7 @@ public static class Telemetry {
 	}
 
 	public static void position(Vector3 position) {
-		string json = "{\"type\": \"position\", \"payload\": {" +
+		string json = "{\"type\": \"ext.simpleTelemetry.location\", \"payload\": {" +
 			"\"time\": " + Time.time + ", " + 
 			"\"x\": " + position.x + ", " + 
 			"\"y\": " + position.y + ", " + 
